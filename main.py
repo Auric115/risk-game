@@ -5,7 +5,7 @@ import sys
 pygame.init()
 
 # Constants
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 1200, 675
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -222,51 +222,90 @@ continents_mapping = {
 }
 
 
+# Define a dictionary to store numbers in each territory
+territory_numbers = {territory: 0 for territory in territories}
+
+# Define a dictionary to store colors of territory borders
+territory_border_colors = {territory: BLACK for territory in territories}
+
+def round_tup(tup, r=1):
+    return (round(tup[0] * r), round(tup[1] * r))
+
+# Function to draw the start menu
+def draw_start_menu(screen, ratio):
+    screen.fill(BLACK)
+    font = pygame.font.SysFont(None, round(48*ratio))
+    text = font.render("Start Game", True, WHITE)
+    text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.blit(text, text_rect)
+
+# Function to draw the sidebar menu
+def draw_sidebar(screen, selected_tab):
+    pygame.draw.rect(screen, BLACK, (WIDTH * 2/3, 0, WIDTH * 1/3, HEIGHT))  # Sidebar background
+    
+    tabs = ["Reinforce", "Attack", "Fortify"]
+    tab_font = pygame.font.SysFont(None, 24)
+    tab_loc = 15
+    for i, tab in enumerate(tabs):
+        text = tab_font.render(tab, True, WHITE if i != selected_tab else BLACK)
+        text_rect = text.get_rect(x=(WIDTH * 2/3 + tab_loc), y=10)
+        screen.blit(text, text_rect)
+        tab_loc += 160
+
+    # Display content based on selected tab
+    content_font = pygame.font.SysFont(None, 32)
+    content_text = content_font.render(tabs[selected_tab], True, WHITE)
+    content_rect = content_text.get_rect(x=(WIDTH * 2/3 + 10), y=200)
+    screen.blit(content_text, content_rect)
+
 # Function to draw the map
-def draw_map(screen):
+def draw_map(screen, ratio, selected_tab):
     screen.fill(WHITE)
     
     for connection in connections:
         start_pos = territories[connection[0]]
         end_pos = territories[connection[1]]
-        pygame.draw.line(screen, BLACK, start_pos, end_pos, 2)  # Draw connections
+        pygame.draw.line(screen, BLACK, round_tup(start_pos,ratio), round_tup(end_pos,ratio), 2)  # Draw connections
 
     for territory, pos in territories.items():
-        pygame.draw.circle(screen, BLACK, pos, 20)  # Draw territory circles
-        pygame.draw.circle(screen, continents[continents_mapping[territory]], pos, 15)  # Fill with continent color
+        pygame.draw.circle(screen, BLACK, round_tup(pos,ratio), round(20*ratio))  # Draw territory circles
+        pygame.draw.circle(screen, continents[continents_mapping[territory]], round_tup(pos,ratio), round(15*ratio))  # Fill with continent color
 
-# Function to draw the start menu
-def draw_start_menu(screen):
-    screen.fill(BLACK)
-    font = pygame.font.SysFont(None, 48)
-    text = font.render("Start Game", True, WHITE)
-    text_rect = text.get_rect(center=(WIDTH // 2 + 100, HEIGHT // 2))
-    screen.blit(text, text_rect)
-
-# Function to draw the sidebar menu
-def draw_sidebar(screen, selected_tab):
-    pygame.draw.rect(screen, BLACK, (WIDTH, 0, WIDTH + 400, HEIGHT))  # Sidebar background
-    
-    tabs = ["Reinforce", "Attack", "Fortify"]
-    tab_font = pygame.font.SysFont(None, 18)
-    tab_loc = 10
-    for i, tab in enumerate(tabs):
-        text = tab_font.render(tab, True, WHITE if i != selected_tab else BLACK)
-        text_rect = text.get_rect(x=WIDTH + tab_loc, y=10)
+        # Display territory numbers
+        font = pygame.font.SysFont(None, 24)
+        text = font.render(str(territory_numbers[territory]), True, BLACK)
+        text_rect = text.get_rect(center=round_tup(pos, ratio))
         screen.blit(text, text_rect)
-        tab_loc += 70
 
-    # Display content based on selected tab
-    content_font = pygame.font.SysFont(None, 32)
-    content_text = content_font.render(tabs[selected_tab], True, WHITE)
-    content_rect = content_text.get_rect(x=WIDTH + 10, y=200)
-    screen.blit(content_text, content_rect)
+        # Change territory border color
+        pygame.draw.circle(screen, territory_border_colors[territory], round_tup(pos,ratio), round(20*ratio), width=4)  # Border color
+
+    draw_sidebar(screen, selected_tab)
+
+# Function to handle window resizing
+def handle_resize(screen, new_width, new_height):
+    global WIDTH, HEIGHT
+    ratio = ((new_width * 1.0) / (WIDTH * 1.0))
+    WIDTH, HEIGHT = new_width, new_height
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))  # Adjust the screen size
+    return ratio
+
+# Function to handle territory clicks
+def handle_territory_click(event_pos, ratio):
+    for territory, pos in territories.items():
+        distance = (((pos[0] * ratio) - event_pos[0]) ** 2 + ((pos[1] * ratio) - event_pos[1]) ** 2) ** 0.5
+        if distance <= 20:  # If click is within the radius of a territory
+            print(f"Clicked on territory: {territory}")
+            # Add your logic for territory click handling here
+            territory_numbers[territory] += 1  # Increment territory number
+            territory_border_colors[territory] = RED  # Change territory border color
+            break  # Break the loop if a territory is clicked
 
 # Main function
 def main():
-    screen = pygame.display.set_mode((WIDTH + 200, HEIGHT))  # Expand the width for sidebar
-    pygame.display.set_caption("Risk Map")
-
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)  # Expand the width for sidebar
+    pygame.display.set_caption("Risk Game by BJ Anderson")
+    ratio = 1
     start_menu = True
     selected_tab = 0  # Default to first tab
 
@@ -281,15 +320,19 @@ def main():
                     if event.button == 1:  # Left mouse button
                         start_menu = False
                 else:
-                    if WIDTH <= event.pos[0] <= WIDTH + 400:  # Check if click is inside sidebar
+                    if WIDTH * 2/3 <= event.pos[0] <= WIDTH:  # Check if click is inside sidebar
                         if 0 <= event.pos[1] <= 21: #Check if click is inside tabspace
-                            selected_tab = (event.pos[0] - WIDTH - 10) // 70
+                            selected_tab = (event.pos[0] - round((WIDTH * 2/3) - 15)) // 160
+                    else:
+                        handle_territory_click(event.pos, ratio)
+            # Handle window resizing
+            elif event.type == pygame.VIDEORESIZE:
+                ratio = handle_resize(screen, event.w, event.h)
 
         if start_menu:
-            draw_start_menu(screen)
+            draw_start_menu(screen, ratio)
         else:
-            draw_map(screen)
-            draw_sidebar(screen, selected_tab)
+            draw_map(screen, ratio, selected_tab)
 
         pygame.display.flip()
 
