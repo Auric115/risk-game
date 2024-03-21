@@ -5,7 +5,7 @@ import sys
 pygame.init()
 
 # Constants
-WIDTH, HEIGHT = 1200, 600
+WIDTH, HEIGHT = 800, 600
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -235,10 +235,40 @@ def draw_map(screen):
         pygame.draw.circle(screen, BLACK, pos, 20)  # Draw territory circles
         pygame.draw.circle(screen, continents[continents_mapping[territory]], pos, 15)  # Fill with continent color
 
+# Function to draw the start menu
+def draw_start_menu(screen):
+    screen.fill(BLACK)
+    font = pygame.font.SysFont(None, 48)
+    text = font.render("Start Game", True, WHITE)
+    text_rect = text.get_rect(center=(WIDTH // 2 + 100, HEIGHT // 2))
+    screen.blit(text, text_rect)
+
+# Function to draw the sidebar menu
+def draw_sidebar(screen, selected_tab):
+    pygame.draw.rect(screen, BLACK, (WIDTH, 0, WIDTH + 400, HEIGHT))  # Sidebar background
+    
+    tabs = ["Reinforce", "Attack", "Fortify"]
+    tab_font = pygame.font.SysFont(None, 18)
+    tab_loc = 10
+    for i, tab in enumerate(tabs):
+        text = tab_font.render(tab, True, WHITE if i != selected_tab else BLACK)
+        text_rect = text.get_rect(x=WIDTH + tab_loc, y=10)
+        screen.blit(text, text_rect)
+        tab_loc += 70
+
+    # Display content based on selected tab
+    content_font = pygame.font.SysFont(None, 32)
+    content_text = content_font.render(tabs[selected_tab], True, WHITE)
+    content_rect = content_text.get_rect(x=WIDTH + 10, y=200)
+    screen.blit(content_text, content_rect)
+
 # Main function
 def main():
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen = pygame.display.set_mode((WIDTH + 200, HEIGHT))  # Expand the width for sidebar
     pygame.display.set_caption("Risk Map")
+
+    start_menu = True
+    selected_tab = 0  # Default to first tab
 
     # Main loop
     while True:
@@ -246,8 +276,21 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if start_menu:
+                    if event.button == 1:  # Left mouse button
+                        start_menu = False
+                else:
+                    if WIDTH <= event.pos[0] <= WIDTH + 400:  # Check if click is inside sidebar
+                        if 0 <= event.pos[1] <= 21: #Check if click is inside tabspace
+                            selected_tab = (event.pos[0] - WIDTH - 10) // 70
 
-        draw_map(screen)
+        if start_menu:
+            draw_start_menu(screen)
+        else:
+            draw_map(screen)
+            draw_sidebar(screen, selected_tab)
+
         pygame.display.flip()
 
 if __name__ == "__main__":
