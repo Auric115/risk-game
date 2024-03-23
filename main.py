@@ -1,5 +1,27 @@
 import pygame
 import sys
+import json
+
+#Define retrieval functions for the setup
+def get_territories(filename):
+    with open(filename, 'r') as file:
+        data = json.load(file)
+        territories_data = data.get('territories', {})
+        territories = {territory: tuple(coords) for territory, coords in territories_data.items()}
+    return territories
+
+def get_connections(filename):
+    with open(filename, 'r') as file:
+        data = json.load(file)
+        connections_data = data.get('connections', [])
+        connections = [tuple(connection) for connection in connections_data]
+    return connections
+
+def get_continent_mapping(filename):
+    with open(filename, 'r') as file:
+        data = json.load(file)
+        continents_mapping = data.get('continents_mapping', {})
+    return continents_mapping
 
 # Initialize Pygame
 pygame.init()
@@ -35,211 +57,11 @@ continents = {
 player_colors = [LIGHT_BLUE, PINK, VIOLET, LIME_GREEN, MAROON, YELLOW]
 
 #Define territories and their locations
-territories = {
-    'Alaska': (70, 100),
-    'Northwest Territory': (170, 100),
-    'Greenland': (300, 70),
-    'Alberta': (130, 160),
-    'Ontario': (200, 160),
-    'Quebec': (260, 160),
-    'Western United States': (160, 220),
-    'Eastern United States': (230, 220),
-    'Central America': (190, 280),
-
-    'Venezuela': (220, 340),
-    'Peru': (190, 420),
-    'Brazil': (280, 400),
-    'Argentina': (240, 480),
-
-    'Iceland': (360, 130),
-    'Scandinavia': (420, 110),
-    'Great Britain': (340, 190),
-    'Northern Europe': (420, 200),
-    'Western Europe': (360, 250),
-    'Southern Europe': (440, 260),
-    'Ukraine': (480, 180),
-
-    'North Africa': (380, 360),
-    'Egypt': (450, 320),
-    'East Africa': (500, 380),
-    'Congo': (430, 420),
-    'South Africa': (450, 490),
-    'Madagascar': (530, 460),
-
-    'Ural': (560, 140),
-    'Siberia': (620, 180),
-    'Yakutsk': (680, 120),
-    'Kamchatka': (740, 100),
-    'Irkutsk': (680, 170),
-    'Mongolia': (690, 230),
-    'Japan': (750, 200),
-    'Afghanistan': (550, 220),
-    'Middle East': (520, 290),
-    'India': (580, 320),
-    'China': (640, 280),
-    'Siam': (660, 330),
-
-    'Indonesia': (660, 400),
-    'New Guinea': (730, 390),
-    'Western Australia': (680, 460),
-    'Eastern Australia': (740, 440),
-}
-
-
+territories = get_territories('setup.json')
 #Define connections between territories
-connections = [
-    ('Alaska', 'Northwest Territory'),
-    ('Alaska', 'Alberta'),
-    ('Northwest Territory', 'Greenland'),
-    ('Northwest Territory', 'Alberta'),
-    ('Northwest Territory', 'Ontario'),
-    ('Greenland', 'Ontario'),
-    ('Greenland', 'Quebec'),
-    ('Greenland', 'Iceland'),
-    ('Alberta', 'Ontario'),
-    ('Alberta', 'Western United States'),
-    ('Ontario', 'Quebec'),
-    ('Ontario', 'Western United States'),
-    ('Ontario', 'Eastern United States'),
-    ('Quebec', 'Eastern United States'),
-    ('Western United States', 'Central America'),
-    ('Western United States', 'Eastern United States'),
-    ('Eastern United States', 'Central America'),
-    ('Central America', 'Venezuela'),
-    
-    ('Venezuela', 'Peru'),
-    ('Venezuela', 'Brazil'),
-    ('Peru', 'Brazil'),
-    ('Peru', 'Argentina'),
-    ('Brazil', 'Argentina'),
-    ('Brazil', 'North Africa'),
-
-    ('Iceland', 'Scandinavia'),
-    ('Iceland', 'Great Britain'),
-    ('Scandinavia', 'Great Britain'),
-    ('Scandinavia', 'Northern Europe'),
-    ('Scandinavia', 'Ukraine'),
-    ('Great Britain', 'Northern Europe'),
-    ('Great Britain', 'Western Europe'),
-    ('Northern Europe', 'Western Europe'),
-    ('Northern Europe', 'Southern Europe'),
-    ('Northern Europe', 'Ukraine'),
-    ('Western Europe', 'North Africa'),
-    ('Western Europe', 'Southern Europe'),
-    ('Southern Europe', 'North Africa'),
-    ('Southern Europe', 'Egypt'),
-    ('Southern Europe', 'Middle East'),
-    ('Southern Europe', 'Ukraine'),
-    ('Ukraine', 'Ural'),
-    ('Ukraine', 'Afghanistan'),
-    ('Ukraine', 'Middle East'),
-
-    ('North Africa', 'Egypt'),
-    ('North Africa', 'East Africa'),
-    ('North Africa', 'Congo'),
-    ('Egypt', 'East Africa'),
-    ('Egypt', 'Middle East'),
-    ('East Africa', 'Congo'),
-    ('East Africa', 'South Africa'),
-    ('East Africa', 'Madagascar'),
-    ('East Africa', 'Middle East'),
-    ('Congo', 'South Africa'),
-    ('South Africa', 'Madagascar'),
-    
-    ('Ural', 'Siberia'),
-    ('Ural', 'Afghanistan'),
-    ('Ural', 'China'),
-    ('Siberia', 'Yakutsk'),
-    ('Siberia', 'Irkutsk'),
-    ('Siberia', 'Mongolia'),
-    ('Siberia', 'China'),
-    ('Yakutsk', 'Kamchatka'),
-    ('Yakutsk', 'Irkutsk'),
-    ('Kamchatka', 'Irkutsk'),
-    ('Kamchatka', 'Mongolia'),
-    ('Kamchatka', 'Japan'),
-    ('Irkutsk', 'Mongolia'),
-    ('Mongolia', 'Japan'),
-    ('Mongolia', 'China'),
-    ('Afghanistan', 'Middle East'),
-    ('Afghanistan', 'India'),
-    ('Afghanistan', 'China'),
-    ('Middle East', 'India'),
-    ('India', 'China'),
-    ('India', 'Siam'),
-    ('China', 'Siam'),
-    ('Siam', 'Indonesia'),
-
-    ('Indonesia', 'New Guinea'),
-    ('Indonesia', 'Western Australia'),
-    ('New Guinea', 'Western Australia'),
-    ('New Guinea', 'Eastern Australia'),
-    ('Western Australia', 'Eastern Australia'),
-]
-
-
-# Define continents and their color
-continents = {
-    'North America': RED,
-    'South America': ORANGE,
-    'Europe': BLUE,
-    'Africa': BROWN,
-    'Asia': GREEN,
-    'Australia': PURPLE
-}
-
-
+connections = get_connections('setup.json')
 # Assign territories to continents
-continents_mapping = {
-    'Alaska': 'North America',
-    'Northwest Territory': 'North America',
-    'Greenland': 'North America',
-    'Alberta': 'North America',
-    'Ontario': 'North America',
-    'Quebec': 'North America',
-    'Western United States': 'North America',
-    'Eastern United States': 'North America',
-    'Central America': 'North America',
-
-    'Venezuela': 'South America',
-    'Peru': 'South America',
-    'Brazil': 'South America',
-    'Argentina': 'South America',
-
-    'Iceland': 'Europe',
-    'Scandinavia': 'Europe',
-    'Great Britain': 'Europe',
-    'Northern Europe': 'Europe',
-    'Western Europe': 'Europe',
-    'Southern Europe': 'Europe',
-    'Ukraine': 'Europe',
-
-    'North Africa': 'Africa',
-    'Egypt': 'Africa',
-    'East Africa': 'Africa',
-    'Congo': 'Africa',
-    'South Africa': 'Africa',
-    'Madagascar': 'Africa',
-
-    'Ural': 'Asia',
-    'Siberia': 'Asia',
-    'Yakutsk': 'Asia',
-    'Kamchatka': 'Asia',
-    'Irkutsk': 'Asia',
-    'Mongolia': 'Asia',
-    'Japan': 'Asia',
-    'Afghanistan': 'Asia',
-    'Middle East': 'Asia',
-    'India': 'Asia',
-    'China': 'Asia',
-    'Siam': 'Asia',
-
-    'Indonesia': 'Australia',
-    'New Guinea': 'Australia',
-    'Western Australia': 'Australia',
-    'Eastern Australia': 'Australia',
-}
-
+continents_mapping = get_continent_mapping('setup.json')
 
 # Define a dictionary to store numbers in each territory
 territory_numbers = {territory: 0 for territory in territories}
@@ -247,6 +69,8 @@ territory_numbers = {territory: 0 for territory in territories}
 # Define a dictionary to store colors of territory borders
 territory_border_colors = {territory: BLACK for territory in territories}
 
+# Define a dictionary to store troops count for each player
+player_troops = {color: 0 for color in player_colors}
 
 def round_tup(tup, r=1):
     return (round(tup[0] * r), round(tup[1] * r))
@@ -305,16 +129,15 @@ def draw_footer(screen, num_players, player_colors, player_troops, ratio):
     text_y = HEIGHT - footer_height + 10
     color_circles = []
     for i, color in enumerate(player_colors):
-        pygame.draw.circle(screen, color, (50 + i * 120, HEIGHT - footer_height // 2), 20)  # Draw player color circles
-        text = font.render(f"{player_troops[i]} troops", True, WHITE)
-        text_rect = text.get_rect(center=(50 + i * 120, text_y))
-        screen.blit(text, text_rect)
-        color_circles.append((50 + i * 120, HEIGHT - footer_height // 2))
+        if i < num_players:
+            pygame.draw.circle(screen, color, (50 + i * 120, HEIGHT - footer_height // 2), 20)  # Draw player color circles
+            text = font.render(f"{player_troops[color]} troops", True, WHITE)
+            text_rect = text.get_rect(center=(50 + i * 120, text_y))
+            screen.blit(text, text_rect)
+            color_circles.append((50 + i * 120, HEIGHT - footer_height // 2))
     
     return color_circles
     
-
-
 # Function to draw the map
 def draw_map(screen, ratio):
     screen.fill(WHITE)
@@ -354,16 +177,17 @@ def handle_territory_click(event_pos, ratio, player_color):
             # Add your logic for territory click handling here
             territory_numbers[territory] += 1  # Increment territory number
             territory_border_colors[territory] = player_colors[player_color]  # Change territory border color
+            player_troops[player_colors[player_color]] += 1 
             break  # Break the loop if a territory is clicked
 
 # Function to handle clicks on player colors in the footer menu
-# Function to handle clicks on player colors in the footer menu
-def handle_player_click(event_pos, ratio, color_circles):
+def handle_player_click(event_pos, ratio, player_color, color_circles):
     for i, circle in enumerate(color_circles):
         center_x, center_y = circle
         distance = ((center_x - event_pos[0]) ** 2 + (center_y - event_pos[1]) ** 2) ** 0.5
-        if distance <= 10:  # Radius of the color circle
+        if distance <= (15 * ratio):  # Radius of the color circle
             return i
+    return player_color
 
 
 # Main function
@@ -375,8 +199,7 @@ def main():
     selected_tab = 0  # Default to first tab
     num_players = 2  # Default number of players
     player_color = 0
-    player_troops = []
-    color_circles = [];
+    color_circles = []
 
     # Main loop
     while True:
@@ -407,7 +230,7 @@ def main():
                         if 0 <= event.pos[1] <= 21: #Check if click is inside tab space
                             selected_tab = (event.pos[0] - round((WIDTH * 2/3) - 15)) // 160
                     elif HEIGHT * (7/9) <= event.pos[1] <= HEIGHT:
-                        player_color = handle_player_click(event.pos, ratio, color_circles)
+                        player_color = handle_player_click(event.pos, ratio, player_color, color_circles)
                     else:
                         handle_territory_click(event.pos, ratio, player_color)
             # Handle window resizing
