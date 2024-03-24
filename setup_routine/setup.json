@@ -1,141 +1,503 @@
 {
     "territories": {
-        "Alaska": [70, 100],
-        "Northwest Territory": [170, 100],
-        "Greenland": [300, 70],
-        "Alberta": [130, 160],
-        "Ontario": [200, 160],
-        "Quebec": [260, 160],
-        "Western United States": [160, 220],
-        "Eastern United States": [230, 220],
-        "Central America": [190, 280],
-        
-        "Venezuela": [220, 340],
-        "Peru": [190, 420],
-        "Brazil": [280, 400],
-        "Argentina": [240, 480],
-        
-        "Iceland": [360, 130],
-        "Scandinavia": [420, 110],
-        "Great Britain": [340, 190],
-        "Northern Europe": [420, 200],
-        "Western Europe": [360, 250],
-        "Southern Europe": [440, 260],
-        "Ukraine": [480, 180],
-        
-        "North Africa": [380, 360],
-        "Egypt": [450, 320],
-        "East Africa": [500, 380],
-        "Congo": [430, 420],
-        "South Africa": [450, 490],
-        "Madagascar": [530, 460],
-        
-        "Ural": [560, 140],
-        "Siberia": [620, 180],
-        "Yakutsk": [680, 120],
-        "Kamchatka": [740, 100],
-        "Irkutsk": [680, 170],
-        "Mongolia": [690, 230],
-        "Japan": [750, 200],
-        "Afghanistan": [550, 220],
-        "Middle East": [520, 290],
-        "India": [580, 320],
-        "China": [640, 280],
-        "Siam": [660, 330],
-        
-        "Indonesia": [660, 400],
-        "New Guinea": [730, 390],
-        "Western Australia": [680, 460],
-        "Eastern Australia": [740, 440]
+        "Alaska": [
+            0.058333333333333334,
+            0.14814814814814814
+        ],
+        "Northwest Territory": [
+            0.14166666666666666,
+            0.14814814814814814
+        ],
+        "Greenland": [
+            0.25,
+            0.1037037037037037
+        ],
+        "Alberta": [
+            0.10833333333333334,
+            0.23703703703703705
+        ],
+        "Ontario": [
+            0.16666666666666666,
+            0.23703703703703705
+        ],
+        "Quebec": [
+            0.21666666666666667,
+            0.23703703703703705
+        ],
+        "Western United States": [
+            0.13333333333333333,
+            0.32592592592592595
+        ],
+        "Eastern United States": [
+            0.19166666666666668,
+            0.32592592592592595
+        ],
+        "Central America": [
+            0.15833333333333333,
+            0.4148148148148148
+        ],
+        "Venezuela": [
+            0.18333333333333332,
+            0.5037037037037037
+        ],
+        "Peru": [
+            0.15833333333333333,
+            0.6222222222222222
+        ],
+        "Brazil": [
+            0.23333333333333334,
+            0.5925925925925926
+        ],
+        "Argentina": [
+            0.2,
+            0.7111111111111111
+        ],
+        "Iceland": [
+            0.3,
+            0.1925925925925926
+        ],
+        "Scandinavia": [
+            0.35,
+            0.16296296296296298
+        ],
+        "Great Britain": [
+            0.2833333333333333,
+            0.2814814814814815
+        ],
+        "Northern Europe": [
+            0.35,
+            0.2962962962962963
+        ],
+        "Western Europe": [
+            0.3,
+            0.37037037037037035
+        ],
+        "Southern Europe": [
+            0.36666666666666664,
+            0.3851851851851852
+        ],
+        "Ukraine": [
+            0.4,
+            0.26666666666666666
+        ],
+        "North Africa": [
+            0.31666666666666665,
+            0.5333333333333333
+        ],
+        "Egypt": [
+            0.375,
+            0.4740740740740741
+        ],
+        "East Africa": [
+            0.4166666666666667,
+            0.562962962962963
+        ],
+        "Congo": [
+            0.35833333333333334,
+            0.6222222222222222
+        ],
+        "South Africa": [
+            0.375,
+            0.725925925925926
+        ],
+        "Madagascar": [
+            0.44166666666666665,
+            0.6814814814814815
+        ],
+        "Ural": [
+            0.4666666666666667,
+            0.2074074074074074
+        ],
+        "Siberia": [
+            0.5166666666666667,
+            0.26666666666666666
+        ],
+        "Yakutsk": [
+            0.5666666666666667,
+            0.17777777777777778
+        ],
+        "Kamchatka": [
+            0.6166666666666667,
+            0.14814814814814814
+        ],
+        "Irkutsk": [
+            0.5666666666666667,
+            0.2518518518518518
+        ],
+        "Mongolia": [
+            0.575,
+            0.34074074074074073
+        ],
+        "Japan": [
+            0.625,
+            0.2962962962962963
+        ],
+        "Afghanistan": [
+            0.4583333333333333,
+            0.32592592592592595
+        ],
+        "Middle East": [
+            0.43333333333333335,
+            0.42962962962962964
+        ],
+        "India": [
+            0.48333333333333334,
+            0.4740740740740741
+        ],
+        "China": [
+            0.5333333333333333,
+            0.4148148148148148
+        ],
+        "Siam": [
+            0.55,
+            0.4888888888888889
+        ],
+        "Indonesia": [
+            0.55,
+            0.5925925925925926
+        ],
+        "New Guinea": [
+            0.6083333333333333,
+            0.5777777777777777
+        ],
+        "Western Australia": [
+            0.5666666666666667,
+            0.6814814814814815
+        ],
+        "Eastern Australia": [
+            0.6166666666666667,
+            0.6518518518518519
+        ]
     },
     "connections": [
-        ["Alaska", "Northwest Territory"],
-        ["Alaska", "Alberta"],
-        ["Northwest Territory", "Greenland"],
-        ["Northwest Territory", "Alberta"],
-        ["Northwest Territory", "Ontario"],
-        ["Greenland", "Ontario"],
-        ["Greenland", "Quebec"],
-        ["Greenland", "Iceland"],
-        ["Alberta", "Ontario"],
-        ["Alberta", "Western United States"],
-        ["Ontario", "Quebec"],
-        ["Ontario", "Western United States"],
-        ["Ontario", "Eastern United States"],
-        ["Quebec", "Eastern United States"],
-        ["Western United States", "Central America"],
-        ["Western United States", "Eastern United States"],
-        ["Eastern United States", "Central America"],
-        ["Central America", "Venezuela"],
-        
-        ["Venezuela", "Peru"],
-        ["Venezuela", "Brazil"],
-        ["Peru", "Brazil"],
-        ["Peru", "Argentina"],
-        ["Brazil", "Argentina"],
-        ["Brazil", "North Africa"],
-        
-        ["Iceland", "Scandinavia"],
-        ["Iceland", "Great Britain"],
-        ["Scandinavia", "Great Britain"],
-        ["Scandinavia", "Northern Europe"],
-        ["Scandinavia", "Ukraine"],
-        ["Great Britain", "Northern Europe"],
-        ["Great Britain", "Western Europe"],
-        ["Northern Europe", "Western Europe"],
-        ["Northern Europe", "Southern Europe"],
-        ["Northern Europe", "Ukraine"],
-        ["Western Europe", "North Africa"],
-        ["Western Europe", "Southern Europe"],
-        ["Southern Europe", "North Africa"],
-        ["Southern Europe", "Egypt"],
-        ["Southern Europe", "Middle East"],
-        ["Southern Europe", "Ukraine"],
-        ["Ukraine", "Ural"],
-        ["Ukraine", "Afghanistan"],
-        ["Ukraine", "Middle East"],
-        
-        ["North Africa", "Egypt"],
-        ["North Africa", "East Africa"],
-        ["North Africa", "Congo"],
-        ["Egypt", "East Africa"],
-        ["Egypt", "Middle East"],
-        ["East Africa", "Congo"],
-        ["East Africa", "South Africa"],
-        ["East Africa", "Madagascar"],
-        ["East Africa", "Middle East"],
-        ["Congo", "South Africa"],
-        ["South Africa", "Madagascar"],
-        
-        ["Ural", "Siberia"],
-        ["Ural", "Afghanistan"],
-        ["Ural", "China"],
-        ["Siberia", "Yakutsk"],
-        ["Siberia", "Irkutsk"],
-        ["Siberia", "Mongolia"],
-        ["Siberia", "China"],
-        ["Yakutsk", "Kamchatka"],
-        ["Yakutsk", "Irkutsk"],
-        ["Kamchatka", "Irkutsk"],
-        ["Kamchatka", "Mongolia"],
-        ["Kamchatka", "Japan"],
-        ["Irkutsk", "Mongolia"],
-        ["Mongolia", "Japan"],
-        ["Mongolia", "China"],
-        ["Afghanistan", "Middle East"],
-        ["Afghanistan", "India"],
-        ["Afghanistan", "China"],
-        ["Middle East", "India"],
-        ["India", "China"],
-        ["India", "Siam"],
-        ["China", "Siam"],
-        ["Siam", "Indonesia"],
-        
-        ["Indonesia", "New Guinea"],
-        ["Indonesia", "Western Australia"],
-        ["New Guinea", "Western Australia"],
-        ["New Guinea", "Eastern Australia"],
-        ["Western Australia", "Eastern Australia"]
+        [
+            "Alaska",
+            "Northwest Territory"
+        ],
+        [
+            "Alaska",
+            "Alberta"
+        ],
+        [
+            "Northwest Territory",
+            "Greenland"
+        ],
+        [
+            "Northwest Territory",
+            "Alberta"
+        ],
+        [
+            "Northwest Territory",
+            "Ontario"
+        ],
+        [
+            "Greenland",
+            "Ontario"
+        ],
+        [
+            "Greenland",
+            "Quebec"
+        ],
+        [
+            "Greenland",
+            "Iceland"
+        ],
+        [
+            "Alberta",
+            "Ontario"
+        ],
+        [
+            "Alberta",
+            "Western United States"
+        ],
+        [
+            "Ontario",
+            "Quebec"
+        ],
+        [
+            "Ontario",
+            "Western United States"
+        ],
+        [
+            "Ontario",
+            "Eastern United States"
+        ],
+        [
+            "Quebec",
+            "Eastern United States"
+        ],
+        [
+            "Western United States",
+            "Central America"
+        ],
+        [
+            "Western United States",
+            "Eastern United States"
+        ],
+        [
+            "Eastern United States",
+            "Central America"
+        ],
+        [
+            "Central America",
+            "Venezuela"
+        ],
+        [
+            "Venezuela",
+            "Peru"
+        ],
+        [
+            "Venezuela",
+            "Brazil"
+        ],
+        [
+            "Peru",
+            "Brazil"
+        ],
+        [
+            "Peru",
+            "Argentina"
+        ],
+        [
+            "Brazil",
+            "Argentina"
+        ],
+        [
+            "Brazil",
+            "North Africa"
+        ],
+        [
+            "Iceland",
+            "Scandinavia"
+        ],
+        [
+            "Iceland",
+            "Great Britain"
+        ],
+        [
+            "Scandinavia",
+            "Great Britain"
+        ],
+        [
+            "Scandinavia",
+            "Northern Europe"
+        ],
+        [
+            "Scandinavia",
+            "Ukraine"
+        ],
+        [
+            "Great Britain",
+            "Northern Europe"
+        ],
+        [
+            "Great Britain",
+            "Western Europe"
+        ],
+        [
+            "Northern Europe",
+            "Western Europe"
+        ],
+        [
+            "Northern Europe",
+            "Southern Europe"
+        ],
+        [
+            "Northern Europe",
+            "Ukraine"
+        ],
+        [
+            "Western Europe",
+            "North Africa"
+        ],
+        [
+            "Western Europe",
+            "Southern Europe"
+        ],
+        [
+            "Southern Europe",
+            "North Africa"
+        ],
+        [
+            "Southern Europe",
+            "Egypt"
+        ],
+        [
+            "Southern Europe",
+            "Middle East"
+        ],
+        [
+            "Southern Europe",
+            "Ukraine"
+        ],
+        [
+            "Ukraine",
+            "Ural"
+        ],
+        [
+            "Ukraine",
+            "Afghanistan"
+        ],
+        [
+            "Ukraine",
+            "Middle East"
+        ],
+        [
+            "North Africa",
+            "Egypt"
+        ],
+        [
+            "North Africa",
+            "East Africa"
+        ],
+        [
+            "North Africa",
+            "Congo"
+        ],
+        [
+            "Egypt",
+            "East Africa"
+        ],
+        [
+            "Egypt",
+            "Middle East"
+        ],
+        [
+            "East Africa",
+            "Congo"
+        ],
+        [
+            "East Africa",
+            "South Africa"
+        ],
+        [
+            "East Africa",
+            "Madagascar"
+        ],
+        [
+            "East Africa",
+            "Middle East"
+        ],
+        [
+            "Congo",
+            "South Africa"
+        ],
+        [
+            "South Africa",
+            "Madagascar"
+        ],
+        [
+            "Ural",
+            "Siberia"
+        ],
+        [
+            "Ural",
+            "Afghanistan"
+        ],
+        [
+            "Ural",
+            "China"
+        ],
+        [
+            "Siberia",
+            "Yakutsk"
+        ],
+        [
+            "Siberia",
+            "Irkutsk"
+        ],
+        [
+            "Siberia",
+            "Mongolia"
+        ],
+        [
+            "Siberia",
+            "China"
+        ],
+        [
+            "Yakutsk",
+            "Kamchatka"
+        ],
+        [
+            "Yakutsk",
+            "Irkutsk"
+        ],
+        [
+            "Kamchatka",
+            "Irkutsk"
+        ],
+        [
+            "Kamchatka",
+            "Mongolia"
+        ],
+        [
+            "Kamchatka",
+            "Japan"
+        ],
+        [
+            "Irkutsk",
+            "Mongolia"
+        ],
+        [
+            "Mongolia",
+            "Japan"
+        ],
+        [
+            "Mongolia",
+            "China"
+        ],
+        [
+            "Afghanistan",
+            "Middle East"
+        ],
+        [
+            "Afghanistan",
+            "India"
+        ],
+        [
+            "Afghanistan",
+            "China"
+        ],
+        [
+            "Middle East",
+            "India"
+        ],
+        [
+            "India",
+            "China"
+        ],
+        [
+            "India",
+            "Siam"
+        ],
+        [
+            "China",
+            "Siam"
+        ],
+        [
+            "Siam",
+            "Indonesia"
+        ],
+        [
+            "Indonesia",
+            "New Guinea"
+        ],
+        [
+            "Indonesia",
+            "Western Australia"
+        ],
+        [
+            "New Guinea",
+            "Western Australia"
+        ],
+        [
+            "New Guinea",
+            "Eastern Australia"
+        ],
+        [
+            "Western Australia",
+            "Eastern Australia"
+        ]
     ],
     "continents_mapping": {
         "Alaska": "North America",
@@ -147,12 +509,10 @@
         "Western United States": "North America",
         "Eastern United States": "North America",
         "Central America": "North America",
-        
         "Venezuela": "South America",
         "Peru": "South America",
         "Brazil": "South America",
         "Argentina": "South America",
-        
         "Iceland": "Europe",
         "Scandinavia": "Europe",
         "Great Britain": "Europe",
@@ -160,14 +520,12 @@
         "Western Europe": "Europe",
         "Southern Europe": "Europe",
         "Ukraine": "Europe",
-        
         "North Africa": "Africa",
         "Egypt": "Africa",
         "East Africa": "Africa",
         "Congo": "Africa",
         "South Africa": "Africa",
         "Madagascar": "Africa",
-        
         "Ural": "Asia",
         "Siberia": "Asia",
         "Yakutsk": "Asia",
@@ -180,7 +538,6 @@
         "India": "Asia",
         "China": "Asia",
         "Siam": "Asia",
-        
         "Indonesia": "Australia",
         "New Guinea": "Australia",
         "Western Australia": "Australia",
