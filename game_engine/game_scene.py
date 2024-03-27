@@ -1,10 +1,12 @@
 import pygame, sys
 
 class GameScene:
-    def __init__(self, size):
+    def __init__(self, size, bg_color = (0,0,0)):
         pygame.init()
         self.size = size
+        self.bg_color = bg_color
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
+        self.screen.fill(self.bg_color)
         pygame.display.set_caption("Risk Game by BJ Anderson")
         self.objects = []
 
@@ -24,6 +26,7 @@ class GameScene:
                 obj.collision()
 
     def draw(self):
+        self.screen.fill(self.bg_color)
         for obj in self.objects:
             obj.draw(self.screen)
 

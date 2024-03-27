@@ -63,8 +63,8 @@ class TextRect(Rect):
 
 class Circle(GameObject):
     def __init__(self, pos, size, color):
-        super().__init__(pos, size, color, )
-        self.x, self.y, self.d = 0, 0, 0
+        super().__init__(pos, size, color)
+        self.x, self.y, self.r = 0, 0, 0
 
     def resize(self, s):
         self.x, self.y = round(self.pos[0] * s[0]), round(self.pos[1] * s[1])

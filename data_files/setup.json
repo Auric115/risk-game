@@ -1,4 +1,22 @@
 {
+    "continents": {
+        "North America": [255, 0, 0],
+        "South America": [255, 165, 0],
+        "Europe": [0, 0, 255],
+        "Africa": [165, 42, 42],
+        "Asia": [0, 255, 0],
+        "Australia": [128, 0, 128]
+    },
+
+    "continent_troops": {
+        "North America": 5,
+        "South America": 2,
+        "Europe": 5,
+        "Africa": 3,
+        "Asia": 7,
+        "Australia": 2
+    },
+
     "territories": {
         "Alaska": [
             0.058333333333333334,
@@ -169,6 +187,7 @@
             0.6518518518518519
         ]
     },
+
     "connections": [
         [
             "Alaska",
@@ -177,6 +196,10 @@
         [
             "Alaska",
             "Alberta"
+        ],
+        [
+            "Alaska",
+            "Kamchatka"
         ],
         [
             "Northwest Territory",
@@ -499,6 +522,7 @@
             "Eastern Australia"
         ]
     ],
+    
     "continents_mapping": {
         "Alaska": "North America",
         "Northwest Territory": "North America",

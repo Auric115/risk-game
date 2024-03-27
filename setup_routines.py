@@ -1,4 +1,13 @@
+from game_engine.player import Player
 from game_engine.start_menu import StartMenuButton
+from colors import *
+
+def init_players(n):
+    player_colors = [LIGHT_BLUE, PINK, VIOLET, LIME_GREEN, MAROON, YELLOW, RED, ORANGE, GREEN, BLUE, PURPLE, BROWN]
+    players = []
+    for i in range(n):
+        players.append(Player(f"Player {i+1}", player_colors[i]))
+    return players
 
 def init_start_menu(players):
     # Calculate the number of rows and columns based on the number of players
