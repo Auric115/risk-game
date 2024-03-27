@@ -79,3 +79,26 @@ class Circle(GameObject):
             return True
         
         return None
+
+class TextCircle(Circle):
+    def __init__(self, pos, size, color, msg, font_size, font_color):
+        super().__init__(pos, size, color)
+        self.msg = msg
+        self.font_size = font_size
+        self.font_color = font_color
+        self.x, self.y, self.r = 0, 0, 0
+
+    def resize(self, s):
+        old_x, old_y = self.x, self.y
+        
+        super().resize(s)
+
+        if old_x + old_y != 0:
+            self.font_size = round(self.font_size * (self.x/old_x + self.y/old_y) / 2)
+    
+    def draw(self, screen):
+        Circle.draw(self, screen)
+        font = pygame.font.SysFont(None, self.font_size)
+        text = font.render(self.msg, True, self.font_color)
+        text_rect = text.get_rect(center=(self.x, self.y))
+        screen.blit(text, text_rect)

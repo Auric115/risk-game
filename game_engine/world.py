@@ -1,5 +1,5 @@
 import json, os
-from game_engine.game_object import Circle
+from game_engine.game_object import TextCircle
 
 def get_continents(filename):
     with open(os.path.abspath('data_files\\' + filename ), 'r') as file:
@@ -75,9 +75,9 @@ class MapData:
 
         return continents
 
-class Territory(Circle):
+class Territory(TextCircle):
     def __init__(self, pos, size, color, name, continent, connections):
-        super().__init__(pos, size, color)
+        super().__init__(pos, size, color, str(0), 30, (0,0,0))
         self.name = name
         self.continent = continent
         self.connections = connections
@@ -86,6 +86,7 @@ class Territory(Circle):
 
     def edit_troops(self, n):
         self.troops += n
+        self.msg = str(self.troops)
     
     def resize(self, s):
         return super().resize(s)
@@ -95,6 +96,10 @@ class Territory(Circle):
     
     def collide(self, e):
         return super().collide(e)
+    
+    def collision(self):
+        self.edit_troops(1)
+        return super().collision()
 
 class Continent:
     def __init__(self, name, bonus_troops, territories):

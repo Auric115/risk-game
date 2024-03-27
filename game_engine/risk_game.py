@@ -8,6 +8,8 @@ class RiskGame(GameScene):
         self.map = Map(filename)
         for t in self.map.territories:
             self.add_object(t)
+        
+        self.footer = Footer(players)
 
     def add_object(self, obj):
         return super().add_object(obj)
