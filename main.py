@@ -15,10 +15,11 @@ from game_engine.world import test
 
 def main():
     #test()
-    players = init_players(6)
+    players = init_players(6,True)
     start_menu = StartMenu(init_start_menu(players))
     if not start_menu.run():
-        RiskGame((1200, 675),'setup.json', [p for p, condition in zip(players, start_menu.players()) if condition]).run()
+        game = RiskGame((1200, 675),'setup.json', 'log.txt', [p for p, condition in zip(players, start_menu.players()) if condition])
+        game.run()
 
 if __name__ == "__main__":
     main()

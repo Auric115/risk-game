@@ -5,4 +5,7 @@ class Player:
         self.territories = []
 
     def troops(self):
-        return sum(self.territories.troops)
+        total = 0
+        for t in self.territories:
+            total += t.troops
+        return total

@@ -5,6 +5,7 @@ class GameObject:
         self.pos = pos
         self.size = size
         self.color = color
+        self.log = ""
 
     def resize(self, s):
         return None
@@ -16,8 +17,9 @@ class GameObject:
         return None
     
     def collision(self):
-        print("collided")
-        return None
+        tmp = self.log
+        self.log = ""
+        return tmp
 
 class Rect(GameObject):
     def __init__(self, pos, size, color):
@@ -36,6 +38,13 @@ class Rect(GameObject):
             if self.y <= e[1] <= self.y + self.h:
                 return True
         
+        return None
+
+class Background(Rect):
+    def __init__(self, pos, size, color):
+        super().__init__(pos, size, color)
+
+    def collide(self, e):
         return None
 
 class TextRect(Rect):

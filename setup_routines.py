@@ -2,11 +2,17 @@ from game_engine.player import Player
 from game_engine.start_menu import StartMenuButton
 from colors import *
 
-def init_players(n):
+def init_players(n, names=False):
     player_colors = [LIGHT_BLUE, PINK, VIOLET, LIME_GREEN, MAROON, YELLOW, RED, ORANGE, GREEN, BLUE, PURPLE, BROWN]
+    player_names = ['Eisenhower', 'Cleopatra', 'Alexander', 'Patton', 'Napoleon', 'Sun Tzu', 'Genghis Khan', 'Hannibal', 'Washington', 'Nelson', 'Attila', 'Caesar']
+
     players = []
-    for i in range(n):
-        players.append(Player(f"Player {i+1}", player_colors[i]))
+    if not names:
+        for i in range(n):
+            players.append(Player(f"Player {i+1}", player_colors[i]))
+    else:
+        for i in range(n):
+            players.append(Player(player_names[i], player_colors[i]))
     return players
 
 def init_start_menu(players):

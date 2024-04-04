@@ -1,0 +1,19 @@
+[0, 0, 0, 0] T,Southern Europe,Player 1,1
+[0, 1, 0, 1] T,Siberia,Player 2,1
+[0, 0, 0, 0] T,Madagascar,Player 1,1
+[0, 1, 0, 1] T,Scandinavia,Player 2,1
+[0, 2, 0, 2] T,North Africa,Player 3,1
+[0, 3, 0, 3] T,Middle East,Player 4,1
+[0, 4, 0, 4] T,Ukraine,Player 5,1
+[0, 5, 0, 5] T,Western Europe,Player 6,1
+[0, 0, 0, 6] T,Brazil,Player 1,1
+[0, 1, 0, 7] T,Eastern United States,Player 2,1
+[0, 2, 0, 8] T,Ontario,Player 3,1
+[0, 3, 0, 9] T,Quebec,Player 4,1
+[0, 4, 0, 10] T,Iceland,Player 5,1
+[0, 5, 0, 11] T,Northwest Territory,Player 6,1
+[0, 0, 0, 12] T,Greenland,Player 1,1
+[1, 0, 0, 0] T,Madagascar,Player 1,4
+[1, 1, 0, 1] T,Congo,Player 2,3
+[1, 2, 0, 2] T,Egypt,Player 3,4
+[1, 0, 0, 0] T,Southern Europe,Player 1,5

@@ -1,4 +1,4 @@
-import json, os
+import json, os, pygame
 from game_engine.game_object import TextCircle
 
 def get_continents(filename):
@@ -92,13 +92,21 @@ class Territory(TextCircle):
         return super().resize(s)
     
     def draw(self, screen):
-        return super().draw(screen)
+        pygame.draw.circle(screen, (self.color[0], self.color[1], self.color[2], 0.05), (self.x, self.y), self.r * 1.25, width=round(self.r*0.25))
+        ccolor = (255, 255, 255)
+        if self.owner is not None:
+            ccolor = self.owner.color
+        pygame.draw.circle(screen, ccolor, (self.x, self.y), self.r)
+        font = pygame.font.SysFont(None, self.font_size)
+        text = font.render(self.msg, True, self.font_color)
+        text_rect = text.get_rect(center=(self.x, self.y))
+        screen.blit(text, text_rect)
     
     def collide(self, e):
         return super().collide(e)
     
     def collision(self):
-        self.edit_troops(1)
+        self.log += (self.name + "," + self.owner.name + "," + str(self.troops))
         return super().collision()
 
 class Continent:
