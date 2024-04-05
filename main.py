@@ -11,10 +11,8 @@ from user_interface import *
 from game_engine.start_menu import *
 from colors import *
 from setup_routines import init_start_menu
-from game_engine.world import test
 
 def main():
-    #test()
     players = init_players(6,True)
     start_menu = StartMenu(init_start_menu(players))
     if not start_menu.run():

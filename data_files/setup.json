@@ -131,7 +131,7 @@
             0.26666666666666666
         ],
         "Yakutsk": [
-            0.5666666666666667,
+            0.55,
             0.16
         ],
         "Kamchatka": [
@@ -523,6 +523,13 @@
         ]
     ],
     
+    "border_connections": [
+        [
+            "Alaska",
+            "Kamchatka"
+        ]
+    ],
+
     "continents_mapping": {
         "Alaska": "North America",
         "Northwest Territory": "North America",

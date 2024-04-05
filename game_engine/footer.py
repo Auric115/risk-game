@@ -5,7 +5,7 @@ class Profile(TextCircle):
         self.player = player
     
     def collision(self):
-        return self.player.name
+        return "Profile," + self.player.name
 
 class Footer:
     def __init__(self, players):

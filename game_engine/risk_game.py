@@ -10,10 +10,12 @@ class RiskGame(GameScene):
         # stateNum: turn, player, stage, logid
         self.stateNum = [0, 0, 0, 0]
 
-
         self.players = players
         self.logname = os.path.abspath('data_files\\' + logname)
         self.map = Map(filename)
+        for c in self.map.connections:
+            self.add_object(c)
+
         for t in self.map.territories:
             self.add_object(t)
 
@@ -55,6 +57,18 @@ class RiskGame(GameScene):
                             self.stateNum[3] += 1
                             self.stateNum[1] += 1
                             self.stateNum[1] %= len(self.players)
+                    else:
+                        if self.stateNum[2] == 0:
+                            self.reinforce(clog)
+                        elif self.stateNum[2] == 1:
+                            self.attack(clog)
+                        elif self.stateNum[2] == 2:
+                            self.fortify(clog)
+                        else:
+                            self.stateNum[1] += 1
+                            if self.stateNum >= len(self.players):
+                                self.stateNum[0] += 1
+                                self.stateNum[1] %= len(self.players)
      
     def draw(self):
         return super().draw()
@@ -69,12 +83,12 @@ class RiskGame(GameScene):
         
         slog = log.split(',')
         player = self.stateNum[1]
-        owner = slog[1]
+        owner = slog[2]
 
         if self.players[player].name != owner:
             return -1
         
-        territory = slog[0]
+        territory = slog[1]
         
         for t in self.map.territories:
             if t.name == territory:
@@ -95,3 +109,12 @@ class RiskGame(GameScene):
                 self.forces[p] -= 1
         self.stateNum[0] = 1
         self.footer.update()
+    
+    def reinforce(self, log):
+        return
+    
+    def attack(self, log):
+        return
+    
+    def fortify(self, log):
+        return

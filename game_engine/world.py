@@ -1,5 +1,5 @@
 import json, os, pygame
-from game_engine.game_object import TextCircle
+from game_engine.game_object import TextCircle, Line
 
 def get_continents(filename):
     with open(os.path.abspath('data_files\\' + filename ), 'r') as file:
@@ -27,8 +27,13 @@ def get_connections(filename):
         data = json.load(file)
         connections_data = data.get('connections', [])
         connections = [tuple(connection) for connection in connections_data]
-        #rev_connections = [(connection[1], connection[0]) for connection in connections_data]
-    #return connections + rev_connections
+    return connections
+
+def get_border_connections(filename):
+    with open(os.path.abspath('data_files\\' + filename ), 'r') as file:
+        data = json.load(file)
+        connections_data = data.get('border_connections', [])
+        connections = [tuple(connection) for connection in connections_data]
     return connections
 
 def get_continent_mapping(filename):
@@ -43,6 +48,7 @@ class MapData:
         self.continent_troops_setup = get_continent_troops(filename)
         self.territories_setup = get_territories(filename)
         self.connections_setup = get_connections(filename)
+        self.border_connections_setup = get_border_connections(filename)
         self.continent_mapping_setup = get_continent_mapping(filename)
 
     def generateTerritories(self):
@@ -62,6 +68,35 @@ class MapData:
             territories.append(Territory(pos, (0.015, 0.015), color, name, continent, connections))
         
         return territories
+    
+    def generateConnections(self):
+        connections = []
+        for c in self.connections_setup:
+            border = False
+            pos1 = self.territories_setup[c[0]]
+            pos2 = self.territories_setup[c[1]]
+            for bc in self.border_connections_setup:
+                try: 
+                    bc.index(c[0]) 
+                    bc.index(c[1])
+
+                    border = True
+                except: 
+                    continue
+            if border:
+                avg_y = (pos1[1] + pos2[1]) / 2
+                pos3 = (0, avg_y)
+                pos4 = (0.7, avg_y)
+                if pos1[0] < pos2[0]:
+                    connections.append(Line(pos1, pos3, (0, 0, 0)))
+                    connections.append(Line(pos2, pos4, (0, 0, 0)))
+                else:
+                    connections.append(Line(pos1, pos4, (0, 0, 0)))
+                    connections.append(Line(pos2, pos3, (0, 0, 0)))
+            else:
+                connections.append(Line(pos1, pos2, (0, 0, 0)))
+        
+        return connections
     
     def generateContinents(self, territories):
         continents = []
@@ -106,7 +141,7 @@ class Territory(TextCircle):
         return super().collide(e)
     
     def collision(self):
-        self.log += (self.name + "," + self.owner.name + "," + str(self.troops))
+        self.log += ("Territory," + self.name + "," + self.owner.name + "," + str(self.troops))
         return super().collision()
 
 class Continent:
@@ -123,8 +158,4 @@ class Map:
         map_data = MapData(filename)
         self.territories = map_data.generateTerritories()
         self.continents = map_data.generateContinents(self.territories)
-
-def test():
-    m = Map('setup.json')
-    print(m.territories)
-    print(m.continents)
+        self.connections = map_data.generateConnections()

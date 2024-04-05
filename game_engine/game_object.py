@@ -111,3 +111,18 @@ class TextCircle(Circle):
         text = font.render(self.msg, True, self.font_color)
         text_rect = text.get_rect(center=(self.x, self.y))
         screen.blit(text, text_rect)
+
+class Line(GameObject):
+    def __init__(self, pos, size, color):
+        super().__init__(pos, size, color)
+        self.x, self.y, self.x2, self.y2 = 0, 0, 0, 0
+
+    def resize(self, s):
+        self.x, self.y = round(self.pos[0] * s[0]), round(self.pos[1] * s[1])
+        self.x2, self.y2 = round(self.size[0] * s[0]), round(self.size[1] * s[1])
+
+    def draw(self, screen):
+        pygame.draw.line(screen, (0, 0, 0), (self.x, self.y), (self.x2, self.y2), 2)
+
+    def collide(self, e):
+        return ""
