@@ -69,7 +69,7 @@ class MapData:
         
         return territories
     
-    def generateConnections(self):
+    def generateLines(self):
         connections = []
         for c in self.connections_setup:
             border = False
@@ -88,14 +88,13 @@ class MapData:
                 pos3 = (0, avg_y)
                 pos4 = (0.7, avg_y)
                 if pos1[0] < pos2[0]:
-                    connections.append(Line(pos1, pos3, (0, 0, 0)))
-                    connections.append(Line(pos2, pos4, (0, 0, 0)))
+                    connections.append(Line(pos1, pos3, (0, 0, 0), [c[0], c[1]]))
+                    connections.append(Line(pos2, pos4, (0, 0, 0), [c[0], c[1]]))
                 else:
-                    connections.append(Line(pos1, pos4, (0, 0, 0)))
-                    connections.append(Line(pos2, pos3, (0, 0, 0)))
+                    connections.append(Line(pos1, pos4, (0, 0, 0), [c[0], c[1]]))
+                    connections.append(Line(pos2, pos3, (0, 0, 0), [c[0], c[1]]))
             else:
-                connections.append(Line(pos1, pos2, (0, 0, 0)))
-        
+                connections.append(Line(pos1, pos2, (0, 0, 0), [c[0], c[1]]))
         return connections
     
     def generateContinents(self, territories):
@@ -143,6 +142,14 @@ class Territory(TextCircle):
     def collision(self):
         self.log += ("Territory," + self.name + "," + self.owner.name + "," + str(self.troops))
         return super().collision()
+    
+    def attack(self, t):
+        print(self.name, "attacks", t.name)
+        return 2
+
+    def fortify(self, t):
+        print(self.name, "fortifies", t.name)
+        return 2
 
 class Continent:
     def __init__(self, name, bonus_troops, territories):
@@ -158,4 +165,4 @@ class Map:
         map_data = MapData(filename)
         self.territories = map_data.generateTerritories()
         self.continents = map_data.generateContinents(self.territories)
-        self.connections = map_data.generateConnections()
+        self.lines = map_data.generateLines()

@@ -1,0 +1,128 @@
+def collide(self, pos):
+        with open(self.logname, 'a') as log_file:
+            for obj in self.objects:
+                if obj.collide(pos):
+                    clog = obj.collision()
+                    data = str(self.stateNum) + " " + clog + "\n"
+                    print(data, end="")
+                    if self.stateNum[0] == 0:
+                        if self.initial_reinforce(clog) == 1:
+                            log_file.write(data)
+                            self.stateNum[1] += 1
+                            self.stateNum[1] %= len(self.players)
+                    else:
+                        if self.stateNum[2] == 0:
+                            res = self.reinforce(clog)
+                            if res == 2:
+                                log_file.write(data)
+                                self.stateNum[1] += 1
+                                self.stateNum[1] %= len(self.players)
+
+                        elif self.stateNum[2] == 1:
+                            self.attack(clog)
+                        elif self.stateNum[2] == 2:
+                            self.fortify(clog)
+                        else:
+                            self.stateNum[1] += 1
+                            if self.stateNum >= len(self.players):
+                                self.stateNum[0] += 1
+                                self.stateNum[1] %= len(self.players)
+
+
+def initial_reinforce(self, log):
+        if sum(self.forces) <= 0:
+            self.stateNum[0] = 1
+            self.stateNum[3] = 0
+            return 2
+        
+        slog = log.split(',')
+        player = self.stateNum[1]
+        owner = slog[2]
+
+        if self.players[player].name != owner:
+            return -1
+        
+        territory = slog[1]
+        
+        for t in self.map.territories:
+            if t.name == territory:
+                t.edit_troops(1)
+                self.forces[player] -= 1
+                self.footer.update()
+                self.stateNum[3] += 1
+                return 1
+        
+        return -1
+
+    def auto_initial_reinforce(self):
+        l = len(self.map.territories)
+        while sum(self.forces) > 0:
+            t = self.map.territories[rd.randint(0, l-1)]
+            p = self.players.index(t.owner)
+            if self.forces[p] > 0:
+                t.edit_troops(1)
+                self.forces[p] -= 1
+        self.stateNum[0] = 1
+        self.footer.update()
+    
+    def reinforce(self, log):        
+        slog = log.split(',')
+        player = self.stateNum[1]
+        owner = slog[2]
+
+        if self.stateNum[3] == 0:
+            self.forces[player] = len(self.players[player].territories) // 3
+            for continent in self.map.continents:
+                if continent.is_conquered(self.players[player]):
+                    self.forces[player] += continent.bonus_troops
+            
+            self.stateNum[3] = 1
+
+        if self.players[player].name != owner:
+            return -1
+        
+        if self.forces[player] <= 0:
+            return 2
+
+        territory = slog[1]
+        
+        for t in self.map.territories:
+            if t.name == territory:
+                t.edit_troops(1)
+                self.forces[player] -= 1
+                self.footer.update()
+                return 1
+        
+        return -1
+    
+    def attack(self, log):
+        slog = log.split(',')
+        ctype = slog[0]
+        if ctype == "Territory":
+            player = self.stateNum[1]
+            territory = slog[1]
+            owner = slog[2]
+            for t in self.map.territories:
+                if t.name == territory:
+                    if self.players[player].name == owner:
+                                self.attack_src = t
+                                for l in self.map.lines:
+                                        if t.name in l.names:
+                                            l.change_color((255, 0, 0))
+                                        else:
+                                            l.change_color((0, 0, 0))
+                    else:
+                        if self.attack_src is not None:
+                            if self.attack_src.name in t.connections:
+                                for l in self.map.lines:
+                                    l.change_color((0, 0, 0))
+                                tmp = self.attack_src    
+                                self.attack_src == None
+                                return tmp.attack(t)
+
+                        for l in self.map.lines:
+                            l.change_color((0, 0, 0))
+                        self.attack_src == None
+
+    def fortify(self, log):
+        return
