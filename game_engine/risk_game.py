@@ -1,8 +1,9 @@
 import random as rd
-import os, pygame
+import os
 from game_engine.game_scene import GameScene
 from game_engine.world import Map
 from game_engine.footer import Footer
+from game_engine.menu import Menu
 
 class RiskGame(GameScene):
     def __init__(self, size, filename, logname, players):
@@ -36,7 +37,18 @@ class RiskGame(GameScene):
         self.add_object(self.footer.background)
         for p in self.footer.player_profiles:
             self.add_object(p)
-        
+
+        self.menu = Menu()
+        self.add_object(self.menu.background)
+        self.add_object(self.menu.roll_button)
+        self.add_object(self.menu.next_button)
+        for t in self.menu.tabs:
+            self.add_object(t)
+        for d in self.menu.attack_dice:
+            self.add_object(d)
+        for d in self.menu.defend_dice:
+            self.add_object(d)
+
         self.auto_initial_reinforce()
         self.attack_src = None
         self.accessible = []
@@ -207,6 +219,8 @@ class RiskGame(GameScene):
                             tmp = self.attack_src    
                             self.attack_src = None
                             res = tmp.attack(t)
+                    else:
+                        res = 0
 
                     for l in self.map.lines:
                         l.change_color((0, 0, 0))

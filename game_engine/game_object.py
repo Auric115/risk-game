@@ -22,9 +22,11 @@ class GameObject:
         return tmp
 
 class Rect(GameObject):
-    def __init__(self, pos, size, color):
+    def __init__(self, pos, size, color, text="", font_size=30):
         super().__init__(pos, size, color)
         self.x, self.y, self.w, self.h = 0, 0, 0, 0
+        self.text = text
+        self.font_size = font_size
 
     def resize(self, s):
         self.x, self.y = round(self.pos[0] * s[0]), round(self.pos[1] * s[1])
@@ -32,6 +34,13 @@ class Rect(GameObject):
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.w, self.h))
+        if self.text != "":
+            font = pygame.font.Font(None, self.font_size)  # Use default font
+            text_surface = font.render(self.text, True, (255, 255, 255))
+            text_rect = text_surface.get_rect(center=(self.x + self.w // 2, self.y + self.h // 2))
+            
+            screen.blit(text_surface, text_rect)
+            
 
     def collide(self, e):
         if self.x <= e[0] <= self.x + self.w:
